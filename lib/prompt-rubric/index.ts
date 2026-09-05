@@ -146,11 +146,16 @@ const matchers: Record<CriterionId, Matcher[]> = {
   goal: [
     {
       pattern:
+        /(?:目標[：:]|修正|修復|新增|實作|重構|重新命名|移除|遷移|調查|解釋|診斷|審查|撰寫|更新|升級|分析)/,
+    },
+    {
+      pattern:
         /\b(fix|implement|add|refactor|rename|remove|migrate|investigate|explain|diagnose|review|document|optimi[sz]e|reproduce|write|update|extract|replace|upgrade|profile|benchmark|audit)\b/i,
     },
     { pattern: /^\s*goal\s*:/im },
   ],
   context: [
+    { pattern: /(?:上下文|相關檔案|錯誤訊息|堆疊追蹤|日誌輸出|模組|函式|元件)[^。\n]{0,30}/ },
     // A path-like token: src/auth/session.ts, app/api/route.js, lib\parser.rb
     { pattern: /(^|[\s"'`(])[\w.@-]+[\\/][\w.@/\\-]*\.[a-z0-9]{1,5}\b/i },
     // A directory reference
@@ -166,12 +171,17 @@ const matchers: Record<CriterionId, Matcher[]> = {
   scope: [
     {
       pattern:
+        /(?:最小(?:修改|修正|變更)|只(?:能|修改|編輯|處理|讀取)|範圍[：:]|不要(?:改|碰|編輯|新增))/,
+    },
+    {
+      pattern:
         /\b(smallest|minimal|only (?:change|touch|edit|modify)|scoped? to|limit(?:ed)? to|confine[d]? to|stay within|nothing else)\b/i,
     },
     { pattern: /\bdo not (?:change|touch|edit|modify|refactor|rename|add)\b/i },
     { pattern: /^\s*(?:scope|non-goals?)\s*:/im },
   ],
   constraints: [
+    { pattern: /(?:不要|不得|禁止|保留|維持|不改變|不新增)[^。\n]{1,40}/ },
     // Capture the object of the prohibition too, so the evidence shown to the
     // learner is the actual rule rather than a bare "do not".
     { pattern: /\b(?:do not|don't|never|must not|avoid)\s+\S+(?:\s+\S+){0,3}/i },
@@ -181,6 +191,7 @@ const matchers: Record<CriterionId, Matcher[]> = {
     { pattern: /^\s*(?:constraints?|non-goals?)\s*:/im },
   ],
   examples: [
+    { pattern: /(?:例如|範例|證據|症狀|重現|預期輸出|實際輸出|失敗斷言)[^。\n]{0,40}/ },
     { pattern: /```/ },
     {
       pattern:
@@ -193,6 +204,7 @@ const matchers: Record<CriterionId, Matcher[]> = {
     { pattern: /^\s*(?:examples?|symptoms?)\s*:/im },
   ],
   edgeCases: [
+    { pattern: /(?:邊界|空值|空陣列|空字串|過期|逾時|並行|同時呼叫|負數|無效輸入|錯誤路徑)/ },
     {
       pattern:
         /\b(?:edge case|corner case|boundary|empty|null|undefined|nil|zero|negative|unicode|timeout|expired|concurrent|race condition|malformed|invalid input|off[- ]by[- ]one)\b/i,
@@ -200,6 +212,7 @@ const matchers: Record<CriterionId, Matcher[]> = {
     { pattern: /^\s*(?:expected behavio(?:u)?r|edge cases?)\s*:/im },
   ],
   verification: [
+    { pattern: /(?:執行|跑|新增|補上)[^。\n]{0,30}(?:測試|檢查|建置|基準)|(?:驗證[：:]|回歸測試)/ },
     {
       pattern:
         /\b(?:npm|pnpm|yarn|bun|pytest|go|cargo|make|mvn|gradle|dotnet|bundle|rake|tox|composer|swift|ctest|bazel)\s+[\w:.-]+/i,
@@ -219,6 +232,7 @@ const matchers: Record<CriterionId, Matcher[]> = {
     { pattern: /^\s*verification\s*:/im },
   ],
   deliverable: [
+    { pattern: /(?:回報|摘要|列出|交付[：:]|說明(?:原因|根因|修改|結果))/ },
     {
       pattern:
         /\b(?:report|summari[sz]e|summary|tell me|list (?:the )?(?:files|changes)|explain (?:the )?(?:root cause|what|why)|finish with|end with|when (?:you'?re )?(?:finished|done))\b/i,

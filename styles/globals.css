@@ -1,4 +1,25 @@
 @import 'tailwindcss';
+@source '../.localized';
+
+html[data-font-size='large'] {
+  font-size: 18px;
+}
+html[data-font-size='larger'] {
+  font-size: 20px;
+}
+html[data-reading-width='compact'] {
+  --reading-width: 60rem;
+  --prose-width: 58ch;
+}
+html[data-reading-width='wide'] {
+  --reading-width: 90rem;
+  --prose-width: 90ch;
+}
+main > .mx-auto,
+main > section > .mx-auto,
+main > section.mx-auto {
+  max-width: min(var(--reading-width), 100%);
+}
 
 /* ------------------------------------------------------------------ */
 /*  Design tokens                                                      */
@@ -11,6 +32,8 @@
 
 :root {
   color-scheme: light;
+  --reading-width: 76rem;
+  --prose-width: 72ch;
 
   --ca-bg: #faf7f2;
   --ca-bg-grain: #efe8dc;
@@ -307,7 +330,7 @@
   }
 
   .ca-prose {
-    max-width: 72ch;
+    max-width: var(--prose-width);
   }
 
   .ca-prose h2 {

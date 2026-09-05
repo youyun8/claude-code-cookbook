@@ -22,7 +22,7 @@ test('a learner can start, complete a lesson, and resume after a reload', async 
   const submit = page.getByRole('button', { name: 'Submit answers' });
   await expect(submit).toBeEnabled();
   await submit.click();
-  await expect(page.getByText('3 of 3 correct.')).toBeVisible();
+  await expect(page.getByText('3 of 3 correct.', { exact: true })).toBeVisible();
 
   await page.getByRole('button', { name: 'Mark this lesson complete' }).click();
   await expect(page.getByRole('button', { name: 'Completed' })).toBeVisible();
@@ -57,7 +57,7 @@ test('progress can be exported and reset', async ({ page }) => {
   const download = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Export progress' }).click();
   const file = await download;
-  expect(file.suggestedFilename()).toBe('claude-code-academy-progress.json');
+  expect(file.suggestedFilename()).toBe('claude-code-cookbook-progress.json');
 
   await page.getByRole('button', { name: 'Reset progress' }).click();
   await page.getByRole('button', { name: 'Yes, delete everything' }).click();
@@ -76,12 +76,13 @@ test('a malformed import is rejected without destroying existing progress', asyn
     buffer: Buffer.from('{ this is not valid json'),
   });
 
-  await expect(page.getByText(/could not be read as Claude Code Academy progress/)).toBeVisible();
+  await expect(page.getByText(/could not be read as Claude Code Cookbook progress/)).toBeVisible();
   await expect(page.getByText('1 of 10 lessons complete').first()).toBeVisible();
 });
 
 test('theme choice persists across navigation', async ({ page }) => {
   await page.goto('/');
+  await page.getByRole('button', { name: 'Reading preferences' }).click();
   await page.getByRole('radio', { name: 'Dark' }).click({ force: true });
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 

@@ -26,6 +26,12 @@ export const TASK_LABELS: Record<RecipeTask, string> = {
   automate: 'Automate',
 };
 
+export const DIFFICULTY_LABELS: Record<Recipe['difficulty'], string> = {
+  beginner: 'Beginner',
+  intermediate: 'Intermediate',
+  advanced: 'Advanced',
+};
+
 export const FEATURE_LABELS: Record<RecipeFeature, string> = {
   'plan-mode': 'Plan mode',
   'claude-md': 'CLAUDE.md',

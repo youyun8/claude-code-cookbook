@@ -9,10 +9,29 @@
 const SCRIPT = `
 (function () {
   try {
-    var raw = localStorage.getItem('claude-code-academy:progress:v1');
-    var theme = raw ? (JSON.parse(raw) || {}).theme : null;
+    var raw = localStorage.getItem('claude-code-cookbook:progress:v1');
+    if (!raw) {
+      for (var index = 0; index < localStorage.length; index += 1) {
+        var key = localStorage.key(index);
+        if (key && key !== 'claude-code-cookbook:progress:v1' && key.indexOf('claude-code-') === 0 && key.slice(-12) === ':progress:v1') {
+          raw = localStorage.getItem(key);
+          break;
+        }
+      }
+    }
+    var preferences = raw ? (JSON.parse(raw) || {}) : {};
+    var theme = preferences.theme;
     if (theme === 'light' || theme === 'dark') {
       document.documentElement.setAttribute('data-theme', theme);
+    }
+    if (['normal', 'large', 'larger'].includes(preferences.fontSize)) {
+      document.documentElement.dataset.fontSize = preferences.fontSize;
+    }
+    if (['compact', 'comfortable', 'wide'].includes(preferences.readingWidth)) {
+      document.documentElement.dataset.readingWidth = preferences.readingWidth;
+    }
+    if (location.pathname === '/' && preferences.language === 'zh-TW') {
+      location.replace('/zh-TW/' + location.search + location.hash);
     }
   } catch (e) {}
 })();

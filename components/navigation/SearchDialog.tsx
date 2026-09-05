@@ -48,7 +48,7 @@ export function SearchDialog() {
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-40 bg-black/40 backdrop-blur-[2px]" />
         <Dialog.Content className="fixed left-1/2 top-[10vh] z-50 w-[min(38rem,calc(100vw-2rem))] -translate-x-1/2 overflow-hidden rounded-panel border border-line-strong bg-surface shadow-raised">
-          <Dialog.Title className="sr-only">Search Claude Code Academy</Dialog.Title>
+          <Dialog.Title className="sr-only">Search Claude Code Cookbook</Dialog.Title>
           <Dialog.Description className="sr-only">
             Search lessons, recipes, glossary terms, reference entries, and safety scenarios.
           </Dialog.Description>

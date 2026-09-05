@@ -1,4 +1,5 @@
 'use client';
+import { DIFFICULTY_LABELS } from '@/data/recipes';
 
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
@@ -108,8 +109,7 @@ export function RecipeBrowser({ recipes }: { recipes: readonly Recipe[] }) {
               <option value="all">Any difficulty</option>
               {DIFFICULTIES.map((option) => (
                 <option key={option} value={option}>
-                  {option[0]?.toUpperCase()}
-                  {option.slice(1)}
+                  {DIFFICULTY_LABELS[option]}
                 </option>
               ))}
             </select>
@@ -225,10 +225,7 @@ export function RecipeBrowser({ recipes }: { recipes: readonly Recipe[] }) {
                     <Chip tone={riskTone(recipe.risk)} icon={riskIcon(recipe.risk)}>
                       {RISK_LABELS[recipe.risk]}
                     </Chip>
-                    <Chip>
-                      {recipe.difficulty[0]?.toUpperCase()}
-                      {recipe.difficulty.slice(1)}
-                    </Chip>
+                    <Chip>{DIFFICULTY_LABELS[recipe.difficulty]}</Chip>
                     {recipe.features.map((entry) => (
                       <Chip key={entry} tone="violet">
                         {FEATURE_LABELS[entry]}

@@ -1,6 +1,8 @@
 .next
 out
 node_modules
+.localized
+app/(zh)
 coverage
 playwright-report
 test-results

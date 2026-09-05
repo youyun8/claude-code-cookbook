@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { DIFFICULTY_LABELS } from '@/data/recipes';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import {
@@ -61,10 +62,7 @@ export default async function RecipePage({ params }: PageProps) {
           <Chip tone={riskTone(recipe.risk)} icon={riskIcon(recipe.risk)}>
             {RISK_LABELS[recipe.risk]}
           </Chip>
-          <Chip>
-            {recipe.difficulty[0]?.toUpperCase()}
-            {recipe.difficulty.slice(1)}
-          </Chip>
+          <Chip>{DIFFICULTY_LABELS[recipe.difficulty]}</Chip>
           {recipe.features.map((feature) => (
             <Chip key={feature} tone="violet">
               {FEATURE_LABELS[feature]}

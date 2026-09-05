@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   images: { unoptimized: true },
   reactStrictMode: true,
+  // Separate language root layouts need one global static 404 document.
+  experimental: { globalNotFound: true },
 };
 
 export default nextConfig;

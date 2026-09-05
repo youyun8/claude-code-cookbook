@@ -1,4 +1,4 @@
-# Claude Code Academy
+# Claude Code Cookbook
 
 An interactive course teaching developers to use Claude Code. Next.js App
 Router, TypeScript, Tailwind v4, statically exported.
@@ -11,6 +11,13 @@ Router, TypeScript, Tailwind v4, statically exported.
 - End-to-end and accessibility: `npm run build` first, then `npm run test:e2e`
 
 ## Conventions
+
+- Brand: Claude Code Cookbook. The old storage key is retained only for migration.
+- English routes live in `app/(en)`; Chinese text lives in `locales/zh-TW`.
+  Run `npm run localize` to regenerate the Chinese edition after editing shared
+  source. Never edit `.localized/` or `app/(zh)/` directly.
+- Commit subjects start with `feat:`, `fix:`, `chore:` or another conventional type.
+  Every nonblank body line must be a bullet no longer than 120 characters.
 
 - Educational material is typed data in `content/`, never JSX. Pages render it
   through `components/learning/BlockRenderer.tsx`.

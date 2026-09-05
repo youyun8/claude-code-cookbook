@@ -1,4 +1,6 @@
 node_modules/
+.localized/
+app/(zh)/
 .next/
 out/
 coverage/

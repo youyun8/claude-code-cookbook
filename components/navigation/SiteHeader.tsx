@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { SearchDialog } from './SearchDialog';
 import { KeyboardShortcuts } from './KeyboardShortcuts';
 import { CourseNav } from './CourseNav';
-import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { Preferences } from '@/components/ui/Preferences';
 
 const LINKS = [
   { href: '/learn/', label: 'Learn' },
@@ -57,8 +57,8 @@ export function SiteHeader() {
           >
             ⌘
           </span>
-          <span className="hidden sm:inline">Claude Code Academy</span>
-          <span className="sm:hidden">Academy</span>
+          <span className="hidden sm:inline">Claude Code Cookbook</span>
+          <span className="sm:hidden">Cookbook</span>
         </Link>
 
         <nav aria-label="Main" className="ml-auto hidden lg:block">
@@ -87,9 +87,7 @@ export function SiteHeader() {
         <div className="ml-auto flex items-center gap-2 lg:ml-2">
           <SearchDialog />
           <KeyboardShortcuts />
-          <div className="hidden sm:block">
-            <ThemeToggle />
-          </div>
+          <Preferences />
         </div>
       </div>
 
@@ -114,9 +112,6 @@ export function SiteHeader() {
             })}
           </ul>
         </nav>
-        <div className="shrink-0 sm:hidden">
-          <ThemeToggle />
-        </div>
       </div>
     </header>
   );

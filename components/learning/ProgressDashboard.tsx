@@ -44,13 +44,13 @@ export function ProgressDashboard() {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
     anchor.href = url;
-    anchor.download = 'claude-code-academy-progress.json';
+    anchor.download = 'claude-code-cookbook-progress.json';
     document.body.append(anchor);
     anchor.click();
     anchor.remove();
     URL.revokeObjectURL(url);
     announce('Progress exported as a JSON file.');
-    setMessage({ tone: 'ok', text: 'Exported claude-code-academy-progress.json.' });
+    setMessage({ tone: 'ok', text: 'Exported claude-code-cookbook-progress.json.' });
   }
 
   async function onFile(file: File) {

@@ -11,6 +11,7 @@ import {
   migrate,
   serializeExport,
   STORAGE_KEY,
+  LEGACY_STORAGE_PREFIX,
   type ProgressState,
 } from './schema';
 
@@ -27,9 +28,27 @@ export function detectStorage(): StorageStatus {
   }
 }
 
+function findLegacyStorageKey(): string | null {
+  for (let index = 0; index < window.localStorage.length; index += 1) {
+    const key = window.localStorage.key(index);
+    if (
+      key &&
+      key !== STORAGE_KEY &&
+      key.startsWith(LEGACY_STORAGE_PREFIX) &&
+      key.endsWith(':progress:v1')
+    ) {
+      return key;
+    }
+  }
+  return null;
+}
+
 export function readProgress(): { state: ProgressState; status: StorageStatus } {
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const legacyKey = findLegacyStorageKey();
+    const raw =
+      window.localStorage.getItem(STORAGE_KEY) ??
+      (legacyKey ? window.localStorage.getItem(legacyKey) : null);
     if (raw === null) return { state: createEmptyProgress(), status: 'available' };
     const result = migrate(JSON.parse(raw));
     if (result === null) return { state: createEmptyProgress(), status: 'available' };
@@ -51,6 +70,8 @@ export function writeProgress(state: ProgressState): StorageStatus {
 export function clearProgress(): void {
   try {
     window.localStorage.removeItem(STORAGE_KEY);
+    let key: string | null;
+    while ((key = findLegacyStorageKey()) !== null) window.localStorage.removeItem(key);
   } catch {
     /* Nothing to clear when storage is unavailable. */
   }

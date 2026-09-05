@@ -36,6 +36,9 @@ interface ProgressContextValue {
   toggleBookmark: (id: string) => void;
   setLastLesson: (slug: string) => void;
   setTheme: (theme: ThemeChoice) => void;
+  setPreferences: (
+    preferences: Partial<Pick<ProgressState, 'fontSize' | 'readingWidth' | 'language'>>,
+  ) => void;
   reset: () => void;
   exportJson: () => string;
   importJson: (text: string) => { ok: true; notes: string[] } | { ok: false; error: string };
@@ -80,6 +83,12 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       toggleBookmark: (id) => update((previous) => actions.toggleBookmark(previous, id)),
       setLastLesson: (slug) => update((previous) => actions.setLastLesson(previous, slug)),
       setTheme: (theme) => update((previous) => actions.setTheme(previous, theme)),
+      setPreferences: (preferences) =>
+        update((previous) => ({
+          ...previous,
+          ...preferences,
+          updatedAt: new Date().toISOString(),
+        })),
       reset: () => {
         clearProgress();
         setState(createEmptyProgress());
@@ -91,7 +100,9 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
           return {
             ok: false as const,
             error:
-              'That file could not be read as Claude Code Academy progress. Check that it is the JSON file exported from this site and that it has not been edited.',
+              state.language === 'zh-TW'
+                ? '無法將此檔案讀取為 Claude Code Cookbook 進度。請確認它是從本站匯出的 JSON，且內容未遭修改。'
+                : 'That file could not be read as Claude Code Cookbook progress. Check that it is the JSON file exported from this site and that it has not been edited.',
           };
         }
         setState(result.state);

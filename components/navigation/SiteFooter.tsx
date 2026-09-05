@@ -8,7 +8,7 @@ export function SiteFooter() {
       <div className="mx-auto max-w-[90rem] px-4 py-8">
         <div className="grid gap-6 sm:grid-cols-3">
           <div>
-            <p className="font-semibold text-ink">Claude Code Academy</p>
+            <p className="font-semibold text-ink">Claude Code Cookbook</p>
             <p className="mt-1 max-w-xs text-sm text-ink-muted">
               An independent course. Not affiliated with or endorsed by Anthropic.
             </p>

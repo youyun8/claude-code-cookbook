@@ -5,7 +5,11 @@ import path from 'node:path';
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: { '@': path.resolve(__dirname, '.') },
+    alias: {
+      '@': path.resolve(__dirname, '.'),
+      '@zh': path.resolve(__dirname, '.localized'),
+      '@english': path.resolve(__dirname, '.'),
+    },
   },
   test: {
     globals: true,

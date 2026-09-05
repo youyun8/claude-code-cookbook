@@ -1,4 +1,4 @@
-# Claude Code Academy
+# Claude Code Cookbook
 
 **From first prompt to reliable engineering workflow.**
 
@@ -22,6 +22,31 @@ npm install
 npm run dev        # http://localhost:3000
 ```
 
+## Languages and reading preferences
+
+English lives at `/`; the Traditional Chinese edition lives at `/zh-TW/`, with
+matching lesson, recipe, reference and practice routes. The Chinese lessons and
+recipes are purpose-written adaptations, with shared IDs for progress and bookmarks.
+Commands, API identifiers, code samples and official document titles retain their
+original spelling.
+
+The gear button opens theme (system/light/dark), font size, reading width and
+language settings on desktop and mobile. Choices are stored locally; the original
+release's progress key is read only for migration. No progress is lost in the rename.
+
+`locales/zh-TW/` contains the Chinese text. `scripts/localize.mjs` compiles the shared
+React components and routes into ignored `.localized/` and `app/(zh)/` directories
+before development, typechecking and builds. It translates AST text nodes, not DOM
+content, so both editions render complete static HTML without JavaScript. Run
+`npm run localize` after changing shared source or translations during development.
+Do not edit generated files. Use `node scripts/list-messages.mjs components` to
+inspect new untranslated UI strings; code and technical names may intentionally
+remain in English.
+
+Commit subjects use conventional prefixes such as `feat:`, `fix:` and `chore:`.
+Every nonblank body line is a bullet of at most 120 characters. The default branch
+is `main`.
+
 ## Scripts
 
 | Command                           | What it does                                                       |
@@ -30,7 +55,7 @@ npm run dev        # http://localhost:3000
 | `npm run build`                   | Static export to `out/`                                            |
 | `npm start`                       | Serve the built site from `out/` on port 3000                      |
 | `npm run typecheck`               | `tsc --noEmit`                                                     |
-| `npm run lint`                    | ESLint via `next lint`                                             |
+| `npm run lint`                    | ESLint                                                             |
 | `npm run format` / `format:check` | Prettier                                                           |
 | `npm test`                        | Unit and component tests (Vitest)                                  |
 | `npm run test:e2e`                | End-to-end, accessibility, link and responsive checks (Playwright) |

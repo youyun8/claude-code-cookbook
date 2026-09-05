@@ -21,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/progress/', priority: 0.4 },
   ];
 
-  return [
+  const pages = [
     ...staticRoutes.map((route) => ({
       url: `${SITE.url}${route.path}`,
       lastModified: reviewed,
@@ -47,4 +47,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     })),
   ];
+  return pages.flatMap((page) => {
+    const path = page.url.slice(SITE.url.length);
+    const languages = { en: page.url, 'zh-TW': `${SITE.url}/zh-TW${path}` };
+    return [
+      { ...page, alternates: { languages } },
+      { ...page, url: languages['zh-TW'], alternates: { languages } },
+    ];
+  });
 }

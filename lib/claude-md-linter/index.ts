@@ -43,6 +43,9 @@ export interface LintReport {
 export const RECOMMENDED_MAX_LINES = 200;
 
 const GENERIC_PHRASES: { pattern: RegExp; label: string }[] = [
+  { pattern: /(?:乾淨|高品質|易讀)的?程式碼/, label: 'write clean code' },
+  { pattern: /(?:遵循|採用)最佳(?:實務|做法)/, label: 'follow best practices' },
+  { pattern: /(?:務必|請)?(?:小心|仔細|謹慎)/, label: 'be careful' },
   { pattern: /\bwrite (?:clean|good|high[- ]quality|readable) code\b/i, label: 'write clean code' },
   { pattern: /\bfollow (?:industry )?best practices\b/i, label: 'follow best practices' },
   { pattern: /\bbe (?:careful|thorough|mindful|diligent)\b/i, label: 'be careful' },
@@ -66,6 +69,10 @@ const GENERIC_PHRASES: { pattern: RegExp; label: string }[] = [
 
 const DISCOVERABLE_PATTERNS: { pattern: RegExp; what: string }[] = [
   {
+    pattern: /(?:本|此|這個)專案使用\s*(?:React|Vue|TypeScript|Next.js)/,
+    what: 'the framework, which is visible in the manifest files',
+  },
+  {
     pattern:
       /^\s*[-*]\s*`?[\w.-]+\/`?\s*[-–—:]\s*(?:contains|holds|has|is where|directory|folder)\b/i,
     what: 'a directory description',
@@ -87,6 +94,7 @@ const DISCOVERABLE_PATTERNS: { pattern: RegExp; what: string }[] = [
 ];
 
 const TRANSIENT_PATTERNS: { pattern: RegExp; what: string }[] = [
+  { pattern: /(?:目前|暫時|這週|下週|截止日期)/, what: 'a point-in-time statement' },
   {
     pattern:
       /\b(?:currently|right now|at the moment|for now|as of (?:today|this week|\w+ \d{4}))\b/i,
@@ -112,6 +120,10 @@ const NOT_ACTIONABLE =
   /\b(?:try to|generally|usually|ideally|where possible|if possible|when appropriate|as needed|prefer to maybe|should probably|might want to|consider)\b/i;
 
 const NEEDS_HOOK: { pattern: RegExp; mechanism: string }[] = [
+  {
+    pattern: /每次.*(?:編輯|修改).*(?:格式化|執行)|(?:編輯|修改).*後.*(?:一定|務必)/,
+    mechanism: 'a PostToolUse hook',
+  },
   {
     pattern:
       /\balways (?:run|format|lint|prettier|gofmt|rustfmt|black)\b[^.\n]*\b(?:after|before|on every|when(?:ever)?)\b/i,

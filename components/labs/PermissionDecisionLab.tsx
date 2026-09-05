@@ -86,7 +86,7 @@ const ACTIONS: Action[] = [
     command: 'git clean -fd',
     context: 'To tidy up before running the build.',
     answer: 'stop',
-    why: 'This permanently deletes untracked files — which may include your own new work, a local config, or an `.env` that is gitignored precisely because it matters. There is no undo.',
+    why: 'This deletes untracked, non-ignored files and directories, which may include your own new work or local configuration. Git cannot restore files it never tracked. Preview the targets with `git clean -nd` first; ignored files are only included with `-x`.',
   },
   {
     id: 'curl-fetch',

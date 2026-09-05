@@ -172,7 +172,7 @@ export const SEARCH_INDEX: readonly SearchDocument[] = buildIndex();
 function tokenize(query: string): string[] {
   return query
     .toLowerCase()
-    .split(/[^a-z0-9.\-/]+/)
+    .split(/[^\p{L}\p{N}.\-/]+/u)
     .filter((token) => token.length > 1);
 }
 

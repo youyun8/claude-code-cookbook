@@ -92,7 +92,7 @@ export default function HomePage() {
                 Learn to delegate coding work without losing control of it.
               </h1>
               <p className="mt-4 max-w-[46ch] text-lg text-ink-muted">
-                Claude Code Academy takes you from installing an agentic coding tool to running a
+                Claude Code Cookbook takes you from installing an agentic coding tool to running a
                 repeatable engineering system — scoping tasks, managing context, setting
                 permissions, and verifying results you can defend in review.
               </p>

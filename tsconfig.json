@@ -16,7 +16,7 @@
     "incremental": true,
     "types": ["vitest/globals", "@testing-library/jest-dom"],
     "plugins": [{ "name": "next" }],
-    "paths": { "@/*": ["./*"] }
+    "paths": { "@/*": ["./*"], "@zh/*": ["./.localized/*"], "@english/*": ["./*"] }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules", "out", ".next", "tests/e2e"]

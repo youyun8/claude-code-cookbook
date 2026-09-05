@@ -48,7 +48,7 @@ const STEPS: Step[] = [
       {
         id: 'b',
         label:
-          'In src/cart/total.ts, applyDiscount() double-applies a percentage discount to items that already have a sale price: a £100 item at 20% off then 10% off returns £72 instead of £72... it returns £64. Reproduce it with a test first, explain the cause, then make the smallest fix. Do not change the public signature. Run `npm test -- cart`.',
+          'In src/cart/total.ts, applyDiscount() reuses the sale percentage instead of the additional discount to items that already have a sale price: a £100 item at 20% off then 10% off returns £64 instead of £72. Reproduce it with a test first, explain the cause, then make the smallest fix. Do not change the public signature. Run `npm test -- cart`.',
         correct: true,
         feedback:
           'Correct. It names the file and function, gives a concrete wrong value against an expected one, requires reproduction before diagnosis, states a non-goal, and names a command that produces pass or fail. Everything Claude needs, and nothing it does not.',
@@ -116,7 +116,7 @@ const STEPS: Step[] = [
       lang: 'diff',
       text: `  export function applyDiscount(item: CartItem, percent: number) {
 -   const base = item.salePrice ?? item.price;
--   return base - base * (percent / 100);
+-   return base - base * ((item.salePercent ?? percent) / 100);
 +   const base = item.salePrice ?? item.price;
 +   const discounted = base - base * (percent / 100);
 +   return Math.round(discounted * 100) / 100;

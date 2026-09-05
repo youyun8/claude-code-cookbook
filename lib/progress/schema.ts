@@ -7,10 +7,15 @@
  * imported file) from a previous release is never silently discarded.
  */
 
-export const SCHEMA_VERSION = 1;
-export const STORAGE_KEY = 'claude-code-academy:progress:v1';
+export const SCHEMA_VERSION = 2;
+export const STORAGE_KEY = 'claude-code-cookbook:progress:v1';
+/** Prefix used to discover progress written by an earlier product name. */
+export const LEGACY_STORAGE_PREFIX = 'claude-code-';
 
 export type ThemeChoice = 'light' | 'dark' | 'system';
+export type FontSize = 'normal' | 'large' | 'larger';
+export type ReadingWidth = 'compact' | 'comfortable' | 'wide';
+export type Language = 'en' | 'zh-TW';
 
 export interface QuizResult {
   /** Number of questions answered correctly on the first attempt. */
@@ -32,6 +37,9 @@ export interface ProgressState {
   /** The last lesson opened, used by "continue learning". */
   lastLessonSlug: string | null;
   theme: ThemeChoice;
+  fontSize: FontSize;
+  readingWidth: ReadingWidth;
+  language: Language;
   updatedAt: string;
 }
 
@@ -44,6 +52,9 @@ export function createEmptyProgress(): ProgressState {
     bookmarks: [],
     lastLessonSlug: null,
     theme: 'system',
+    fontSize: 'normal',
+    readingWidth: 'comfortable',
+    language: 'en',
     updatedAt: new Date(0).toISOString(),
   };
 }
@@ -120,6 +131,12 @@ export function migrate(input: unknown): MigrationResult | null {
     bookmarks: stringArray(input.bookmarks),
     lastLessonSlug: typeof input.lastLessonSlug === 'string' ? input.lastLessonSlug : null,
     theme: themeChoice(input.theme),
+    fontSize: input.fontSize === 'large' || input.fontSize === 'larger' ? input.fontSize : 'normal',
+    readingWidth:
+      input.readingWidth === 'compact' || input.readingWidth === 'wide'
+        ? input.readingWidth
+        : 'comfortable',
+    language: input.language === 'zh-TW' ? 'zh-TW' : 'en',
     updatedAt: typeof input.updatedAt === 'string' ? input.updatedAt : new Date(0).toISOString(),
   };
 
