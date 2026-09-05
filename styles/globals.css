@@ -1,0 +1,410 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------ */
+/*  Design tokens                                                      */
+/*                                                                     */
+/*  The palette is semantic, not literal: components reference roles   */
+/*  (surface, ink, accent) rather than colors. Both themes redefine    */
+/*  the same variables, so every component is theme-correct by         */
+/*  construction and no `dark:` utility variants are needed.           */
+/* ------------------------------------------------------------------ */
+
+:root {
+  color-scheme: light;
+
+  --ca-bg: #faf7f2;
+  --ca-bg-grain: #efe8dc;
+  --ca-surface: #ffffff;
+  --ca-surface-2: #f4efe7;
+  --ca-surface-3: #eae2d6;
+  --ca-border: #ded3c3;
+  --ca-border-strong: #bcac95;
+
+  --ca-ink: #241f1a;
+  --ca-ink-muted: #554d43;
+  --ca-ink-subtle: #6a6157;
+
+  --ca-accent: #a1462a;
+  --ca-accent-hover: #86391f;
+  --ca-accent-ink: #ffffff;
+  --ca-accent-soft: #f8e8e0;
+  --ca-accent-border: #ddbcab;
+
+  --ca-violet: #5a4092;
+  --ca-violet-soft: #eee9f8;
+  --ca-violet-border: #cabce8;
+
+  --ca-success: #1d6640;
+  --ca-success-soft: #e2f1e8;
+  --ca-success-border: #aed6c0;
+
+  --ca-warning: #7a5000;
+  --ca-warning-soft: #fbf0d7;
+  --ca-warning-border: #e0c88f;
+
+  --ca-danger: #97261d;
+  --ca-danger-soft: #fbe5e2;
+  --ca-danger-border: #e8b4ae;
+
+  --ca-focus: #1d4ed8;
+
+  --ca-shadow-sm: 0 1px 2px rgb(60 44 30 / 0.06), 0 1px 3px rgb(60 44 30 / 0.05);
+  --ca-shadow-md: 0 2px 6px rgb(60 44 30 / 0.07), 0 10px 24px rgb(60 44 30 / 0.06);
+
+  --ca-radius: 14px;
+  --ca-radius-sm: 10px;
+  --ca-radius-lg: 18px;
+
+  --ca-font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif;
+  --ca-font-mono:
+    ui-monospace, 'SFMono-Regular', 'JetBrains Mono', 'Cascadia Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
+}
+
+/* Dark palette, shared by the system preference and the explicit choice. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+
+    --ca-bg: #1a1613;
+    --ca-bg-grain: #221d18;
+    --ca-surface: #232019;
+    --ca-surface-2: #2b2721;
+    --ca-surface-3: #343029;
+    --ca-border: #3d382f;
+    --ca-border-strong: #5b544a;
+
+    --ca-ink: #f2ece2;
+    --ca-ink-muted: #bdb2a3;
+    --ca-ink-subtle: #a2988a;
+
+    --ca-accent: #e79269;
+    --ca-accent-hover: #f2a67f;
+    --ca-accent-ink: #241009;
+    --ca-accent-soft: #3a251b;
+    --ca-accent-border: #6d4432;
+
+    --ca-violet: #bda6ee;
+    --ca-violet-soft: #2b2440;
+    --ca-violet-border: #4c4173;
+
+    --ca-success: #79c99a;
+    --ca-success-soft: #1e2f26;
+    --ca-success-border: #35573f;
+
+    --ca-warning: #e3b463;
+    --ca-warning-soft: #322818;
+    --ca-warning-border: #5d4a26;
+
+    --ca-danger: #f0938a;
+    --ca-danger-soft: #35201e;
+    --ca-danger-border: #6b3a35;
+
+    --ca-focus: #9dc0ff;
+
+    --ca-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+    --ca-shadow-md: 0 2px 6px rgb(0 0 0 / 0.35), 0 12px 28px rgb(0 0 0 / 0.35);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --ca-bg: #1a1613;
+  --ca-bg-grain: #221d18;
+  --ca-surface: #232019;
+  --ca-surface-2: #2b2721;
+  --ca-surface-3: #343029;
+  --ca-border: #3d382f;
+  --ca-border-strong: #5b544a;
+
+  --ca-ink: #f2ece2;
+  --ca-ink-muted: #bdb2a3;
+  --ca-ink-subtle: #a2988a;
+
+  --ca-accent: #e79269;
+  --ca-accent-hover: #f2a67f;
+  --ca-accent-ink: #241009;
+  --ca-accent-soft: #3a251b;
+  --ca-accent-border: #6d4432;
+
+  --ca-violet: #bda6ee;
+  --ca-violet-soft: #2b2440;
+  --ca-violet-border: #4c4173;
+
+  --ca-success: #79c99a;
+  --ca-success-soft: #1e2f26;
+  --ca-success-border: #35573f;
+
+  --ca-warning: #e3b463;
+  --ca-warning-soft: #322818;
+  --ca-warning-border: #5d4a26;
+
+  --ca-danger: #f0938a;
+  --ca-danger-soft: #35201e;
+  --ca-danger-border: #6b3a35;
+
+  --ca-focus: #9dc0ff;
+
+  --ca-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --ca-shadow-md: 0 2px 6px rgb(0 0 0 / 0.35), 0 12px 28px rgb(0 0 0 / 0.35);
+}
+
+/* Expose the tokens to Tailwind's utility generator. */
+@theme inline {
+  --color-bg: var(--ca-bg);
+  --color-grain: var(--ca-bg-grain);
+  --color-surface: var(--ca-surface);
+  --color-surface-2: var(--ca-surface-2);
+  --color-surface-3: var(--ca-surface-3);
+  --color-line: var(--ca-border);
+  --color-line-strong: var(--ca-border-strong);
+
+  --color-ink: var(--ca-ink);
+  --color-ink-muted: var(--ca-ink-muted);
+  --color-ink-subtle: var(--ca-ink-subtle);
+
+  --color-accent: var(--ca-accent);
+  --color-accent-hover: var(--ca-accent-hover);
+  --color-accent-ink: var(--ca-accent-ink);
+  --color-accent-soft: var(--ca-accent-soft);
+  --color-accent-line: var(--ca-accent-border);
+
+  --color-violet: var(--ca-violet);
+  --color-violet-soft: var(--ca-violet-soft);
+  --color-violet-line: var(--ca-violet-border);
+
+  --color-success: var(--ca-success);
+  --color-success-soft: var(--ca-success-soft);
+  --color-success-line: var(--ca-success-border);
+
+  --color-warning: var(--ca-warning);
+  --color-warning-soft: var(--ca-warning-soft);
+  --color-warning-line: var(--ca-warning-border);
+
+  --color-danger: var(--ca-danger);
+  --color-danger-soft: var(--ca-danger-soft);
+  --color-danger-line: var(--ca-danger-border);
+
+  --font-sans: var(--ca-font-sans);
+  --font-mono: var(--ca-font-mono);
+
+  --radius-card: var(--ca-radius);
+  --radius-chip: var(--ca-radius-sm);
+  --radius-panel: var(--ca-radius-lg);
+
+  --shadow-card: var(--ca-shadow-sm);
+  --shadow-raised: var(--ca-shadow-md);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Base                                                               */
+/* ------------------------------------------------------------------ */
+
+@layer base {
+  * {
+    border-color: var(--ca-border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--ca-bg);
+    color: var(--ca-ink);
+    font-family: var(--ca-font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    /* A very low-contrast paper grain. Pure CSS, no image download. */
+    background-image: radial-gradient(circle at 1px 1px, var(--ca-bg-grain) 1px, transparent 0);
+    background-size: 22px 22px;
+  }
+
+  code,
+  pre,
+  kbd,
+  samp {
+    font-family: var(--ca-font-mono);
+    font-variant-ligatures: none;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--ca-focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--ca-accent-soft);
+    color: var(--ca-ink);
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Syntax highlighting                                                */
+/*                                                                     */
+/*  Shiki renders dual themes at build time: light colors inline and   */
+/*  dark colors in a --shiki-dark custom property. These rules swap    */
+/*  between them, so highlighted code ships zero client JavaScript.    */
+/* ------------------------------------------------------------------ */
+
+.shiki,
+.shiki span {
+  background-color: transparent !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .shiki,
+  :root:not([data-theme='light']) .shiki span {
+    color: var(--shiki-dark) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+}
+
+:root[data-theme='dark'] .shiki,
+:root[data-theme='dark'] .shiki span {
+  color: var(--shiki-dark) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Reusable primitives                                                */
+/* ------------------------------------------------------------------ */
+
+@layer components {
+  .ca-card {
+    background-color: var(--ca-surface);
+    border: 1px solid var(--ca-border);
+    border-radius: var(--ca-radius);
+    box-shadow: var(--ca-shadow-sm);
+  }
+
+  .ca-prose {
+    max-width: 72ch;
+  }
+
+  .ca-prose h2 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    scroll-margin-top: 5rem;
+  }
+
+  .ca-prose h3 {
+    font-size: 1.175rem;
+    line-height: 1.35;
+    font-weight: 650;
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+    scroll-margin-top: 5rem;
+  }
+
+  .ca-prose p {
+    margin-bottom: 1rem;
+  }
+
+  .ca-prose a {
+    color: var(--ca-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .ca-prose a:hover {
+    color: var(--ca-accent-hover);
+  }
+
+  .ca-prose ul,
+  .ca-prose ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
+
+  .ca-prose ul {
+    list-style: disc;
+  }
+
+  .ca-prose ol {
+    list-style: decimal;
+  }
+
+  .ca-prose li {
+    margin-bottom: 0.375rem;
+  }
+
+  .ca-prose li::marker {
+    color: var(--ca-ink-subtle);
+  }
+
+  .ca-prose :not(pre) > code {
+    background-color: var(--ca-surface-2);
+    border: 1px solid var(--ca-border);
+    border-radius: 5px;
+    padding: 0.08em 0.35em;
+    font-size: 0.875em;
+    word-break: break-word;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Print                                                              */
+/* ------------------------------------------------------------------ */
+
+@media print {
+  :root {
+    --ca-bg: #ffffff;
+    --ca-surface: #ffffff;
+    --ca-surface-2: #ffffff;
+    --ca-ink: #000000;
+    --ca-ink-muted: #333333;
+  }
+
+  body {
+    background-image: none;
+    font-size: 11pt;
+  }
+
+  .ca-no-print {
+    display: none !important;
+  }
+
+  .ca-card {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.75em;
+    word-break: break-all;
+  }
+}
