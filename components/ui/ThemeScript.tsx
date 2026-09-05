@@ -30,8 +30,9 @@ const SCRIPT = `
     if (['compact', 'comfortable', 'wide'].includes(preferences.readingWidth)) {
       document.documentElement.dataset.readingWidth = preferences.readingWidth;
     }
-    if (location.pathname === '/' && preferences.language === 'zh-TW') {
-      location.replace('/zh-TW/' + location.search + location.hash);
+    var basePath = ${JSON.stringify(process.env.NEXT_PUBLIC_BASE_PATH ?? '')};
+    if (location.pathname === basePath + '/' && preferences.language === 'zh-TW') {
+      location.replace(basePath + '/zh-TW/' + location.search + location.hash);
     }
   } catch (e) {}
 })();

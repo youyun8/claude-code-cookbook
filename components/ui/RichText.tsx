@@ -15,7 +15,14 @@ function renderLink(label: string, href: string, key: number): ReactNode {
   const external = /^https?:\/\//.test(href);
   if (!external) {
     return (
-      <a key={key} href={href}>
+      <a
+        key={key}
+        href={
+          href.startsWith('/') && !href.startsWith('//')
+            ? `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${href}`
+            : href
+        }
+      >
         {label}
       </a>
     );

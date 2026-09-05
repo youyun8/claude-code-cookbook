@@ -98,7 +98,7 @@ export function Preferences() {
                   writeProgress({ ...state, language: next });
                   const path = pathname.replace(/^\/zh-TW(?=\/|$)/, '') || '/';
                   window.location.assign(
-                    `${next === 'zh-TW' ? '/zh-TW' : ''}${path}${window.location.search}${window.location.hash}`,
+                    `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${next === 'zh-TW' ? '/zh-TW' : ''}${path}${window.location.search}${window.location.hash}`,
                   );
                 }}
               >

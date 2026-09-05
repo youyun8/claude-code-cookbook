@@ -184,6 +184,26 @@ and the sitemap are right:
 NEXT_PUBLIC_SITE_URL=https://your-domain.example npm run build
 ```
 
+### GitHub Pages
+
+The workflow in `.github/workflows/deploy.yml` publishes `out/` on pushes to
+`main`, or when run manually from the Actions tab. In the repository's
+**Settings → Pages**, select **GitHub Actions** as the source.
+
+The deployed site is `https://youyun8.github.io/claude-code-cookbook/`.
+The workflow sets `NEXT_PUBLIC_BASE_PATH=/claude-code-cookbook` for navigation
+and assets, and `NEXT_PUBLIC_SITE_URL` for metadata and the sitemap. Local
+builds omit the base path and continue to run at `/`.
+
+To build with the same settings locally:
+
+```bash
+NEXT_PUBLIC_BASE_PATH=/claude-code-cookbook NEXT_PUBLIC_SITE_URL=https://youyun8.github.io/claude-code-cookbook npm run build
+```
+
+If the repository name or hosting domain changes, update these workflow
+variables. For a custom domain serving the site at `/`, omit the base path.
+
 ## Accessibility
 
 Targets WCAG 2.2 AA. Automated axe checks run over every major page and over
